@@ -6,6 +6,9 @@ const ProjectForm = () => import('../views/ProjectForm.vue');
 const TaskForm = () => import('../views/TaskForm.vue');
 const NotFound = () => import('../views/NotFound.vue');
 
+// Get the base URL from Vite's environment variable
+const base = import.meta.env.BASE_URL;
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -70,7 +73,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(base),
   routes
 });
 
