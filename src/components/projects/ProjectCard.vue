@@ -85,9 +85,11 @@ export default {
 <style scoped>
 .project-card {
   height: 100%;
+  min-height: 180px;
   display: flex;
   flex-direction: column;
   transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
 }
 
 .project-card:hover {
@@ -117,6 +119,8 @@ export default {
   color: #606266;
   margin-bottom: 15px;
   flex-grow: 1;
+  min-height: 40px;
+  overflow: hidden;
 }
 
 .project-details {

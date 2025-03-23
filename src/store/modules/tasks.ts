@@ -77,6 +77,33 @@ const actions = {
     }
   },
 
+  // New action for status updates that doesn't trigger loading indicators
+  async updateTaskStatus(
+    { commit, rootState }: ActionContext<TasksState, RootState>, 
+    { projectId, taskId, newStatus }: { projectId: string; taskId: string; newStatus: string }
+  ) {
+    try {
+      // Find the task and update its status
+      const projects = rootState.projects.projects;
+      const project = projects.find(p => p.id === projectId);
+      
+      if (!project) throw new Error('Project not found');
+      
+      const task = project.tasks.find(t => t.id === taskId);
+      if (!task) throw new Error('Task not found');
+      
+      // Create updated task with new status
+      const updatedTask = { ...task, status: newStatus };
+      
+      // Update the task
+      commit('updateTask', { projectId, task: updatedTask });
+      localStorage.setItem('projects', JSON.stringify(projects));
+    } catch (error) {
+      console.error('Failed to update task status:', error);
+      throw error;
+    }
+  },
+
   async deleteTask(
     { commit, rootState }: ActionContext<TasksState, RootState>, 
     { projectId, taskId }: DeleteTaskPayload

@@ -119,14 +119,12 @@ export default {
     const taskForm = ref(null);
     const isEditing = computed(() => !!props.taskId);
     const statusOpts = [
-      { label: 'All', value: 'all' },
       { label: 'Pending', value: 'pending' },
       { label: 'In Progress', value: 'in-progress' },
       { label: 'Completed', value: 'completed' }
     ];
 
     const priorityOpts = [
-      { label: 'All', value: 'all' },
       { label: 'Low', value: 'low' },
       { label: 'Medium', value: 'medium' },
       { label: 'High', value: 'high' }

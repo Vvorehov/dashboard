@@ -63,8 +63,23 @@ I built this using:
 - `npm run type-check` - Make sure your TypeScript is behaving
 - `npm run test` - Run the tests
 - `npm run test:coverage` - See how much of your code is tested
-- `npm run test:e2e` - Run those fancy end-to-end tests with Cypress
 
+### Running End-to-End Tests
+
+The app includes E2E tests using Cypress that cover basic navigation:
+
+- Dashboard loading and title verification
+- Ensuring the dashboard home page displays correctly
+- Navigation to the project creation page
+- Navigation back to the dashboard home
+
+```bash
+# Run tests in GUI mode
+npm run test:e2e
+
+# Run tests headlessly
+npm run test:e2e:headless
+```
 
 ## Deployment
 

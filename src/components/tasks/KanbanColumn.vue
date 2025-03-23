@@ -13,7 +13,7 @@
         :key="task.id"
         :task="task"
         :project-id="projectId"
-        @status-change="$emit('status-change', $event)"
+        @status-change="handleStatusChange"
         @delete="$emit('delete', $event)"
         class="task-card"
       />
@@ -37,7 +37,7 @@ export default {
     type: {
       type: String,
       required: true,
-      validator: value => ['pending', 'in-progress', 'completed'].includes(value)
+      validator: value => ['pending', 'in-progress', 'completed', 'all'].includes(value)
     },
     tasks: {
       type: Array,
@@ -52,7 +52,18 @@ export default {
       default: ''
     }
   },
-  emits: ['status-change', 'delete']
+  emits: ['status-change', 'delete'],
+  setup(props, { emit }) {
+    const handleStatusChange = (taskId, newStatus) => {
+      console.log('KanbanColumn - forwarding status change:', taskId, newStatus);
+      console.log('Column type:', props.type, 'Project ID:', props.projectId);
+      emit('status-change', taskId, newStatus);
+    };
+    
+    return {
+      handleStatusChange
+    };
+  }
 };
 </script>
 
@@ -66,6 +77,9 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 80vh;
+  min-height: 400px;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
 .column-header {
@@ -97,6 +111,11 @@ export default {
   color: #67c23a;
 }
 
+.column-header.all {
+  background-color: #f2f6fc;
+  color: #909399;
+}
+
 .task-count {
   background-color: rgba(255, 255, 255, 0.6);
   padding: 2px 8px;
@@ -111,6 +130,8 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-height: 300px;
+  position: relative;
 }
 
 .empty-column {

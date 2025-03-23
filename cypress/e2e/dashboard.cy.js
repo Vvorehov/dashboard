@@ -1,38 +1,51 @@
-describe('Battleship Game E2E Tests', () => {
+/**
+ * Task Dashboard E2E Tests
+ * 
+ * These tests verify the core functionality of the Task Dashboard application.
+ */
+describe('Task Dashboard', () => {
   beforeEach(() => {
-    // Visit the app's main page
     cy.visit('/');
-  });
-
-  it('should have correct title', () => {
-    cy.title().should('include', 'Battleship Game');
-  });
-
-  it('should display the game interface', () => {
-    // Check for basic game interface elements
+    cy.clearLocalStorage();
     cy.get('body').should('be.visible');
-    
-    // Take a screenshot to see what's actually rendered
-    cy.screenshot('game-interface');
-
-    // Log the entire DOM structure to understand the app better
-    cy.document().then((doc) => {
-      cy.log('Document body HTML structure:');
-      cy.log(doc.body.innerHTML.substring(0, 500) + '...');
-    });
   });
 
-  it('should explore the DOM elements', () => {
-    // Get all divs and log their classes to understand the structure
-    cy.get('div').then($divs => {
-      cy.log(`Found ${$divs.length} div elements on the page`);
-      
-      // Log classes of first 5 divs to understand naming conventions
-      for (let i = 0; i < Math.min(5, $divs.length); i++) {
-        const classNames = $divs[i].className;
-        const id = $divs[i].id;
-        cy.log(`Div ${i+1} - ID: ${id || 'none'}, Classes: ${classNames || 'none'}`);
-      }
-    });
+  it('should have the correct title', () => {
+    cy.title().should('include', 'Task Dashboard');
+  });
+
+  it('should display the dashboard homepage', () => {
+    cy.get('.app-title').should('contain', 'Task Dashboard');
+    cy.get('.header-actions').should('be.visible');
+    
+    // Take a screenshot of the homepage
+    cy.screenshot('dashboard-homepage');
+  });
+
+  it('should navigate to new project page', () => {
+    // Find the New Project button by text content
+    cy.contains('New Project').click();
+    
+    // Verify we're on the project creation page by URL
+    cy.url().should('include', '/projects/new');
+    
+    // Verify the form is present
+    cy.get('form').should('be.visible');
+    cy.contains('Create Project').should('be.visible');
+    
+    // Take a screenshot
+    cy.screenshot('new-project-page');
+  });
+
+  it('should navigate back to dashboard', () => {
+    // Navigate to new project page
+    cy.contains('New Project').click();
+    
+    // Now go back to the home
+    cy.contains('Home').click();
+    
+    // Verify we're back on the dashboard
+    cy.url().should('include', '/dashboard');
+    cy.get('.home-container').should('be.visible');
   });
 }); 

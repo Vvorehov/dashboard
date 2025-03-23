@@ -74,7 +74,6 @@ export default {
   setup(props, { emit }) {
     // Status options
     const statusOptions = [
-      { label: 'All', value: 'all' },
       { label: 'Pending', value: 'pending' },
       { label: 'In Progress', value: 'in-progress' },
       { label: 'Completed', value: 'completed' }
@@ -150,6 +149,7 @@ export default {
   position: relative;
   border-radius: 4px;
   border-left-width: 4px;
+  transition: all 0.3s ease; /* Smooth transition for status changes */
 }
 
 .priority-high {
@@ -208,6 +208,7 @@ export default {
 
 .task-status {
   margin-top: 10px;
+  transition: opacity 0.2s ease;
 }
 
 .overdue {

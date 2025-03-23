@@ -5,28 +5,16 @@
 // This is a great place to put global configuration and
 // behavior that modifies Cypress.
 //
+// You can change the location of this file or turn off
+// automatically serving support files with the
+// 'supportFile' configuration option.
+//
 // You can read more here:
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.ts using ES2015 syntax:
-import './commands';
+// Import commands.js using ES2015 syntax:
+import './commands'
 
-// Add any additional configurations needed for the Task Dashboard app
-Cypress.on('window:before:load', (win) => {
-  // We want to preserve localStorage between tests in some cases
-  // But we're manually clearing it in the beforeEach hook of our tests
-});
-
-// Custom commands for debugging
-Cypress.Commands.add('logState', () => {
-  cy.window().then((win) => {
-    console.log('Current localStorage:', win.localStorage);
-    console.log('Current URL:', win.location.href);
-  });
-});
-
-// Add custom commands if needed
-// Cypress.Commands.add('login', () => {
-//   // Implementation of a login command
-// }); 
+// Alternatively you can use CommonJS syntax:
+// require('./commands') 

@@ -73,6 +73,25 @@ const actions = {
     }
   },
 
+  async optimisticDeleteProject({ commit, state }: ActionContext<ProjectsState, RootState>, projectId: string) {
+    try {
+      const backupProjects = [...state.projects];
+      
+      commit('deleteProject', projectId);
+      
+      localStorage.setItem('projects', JSON.stringify(state.projects));
+      
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      commit('setError', null);
+      return true;
+    } catch (error) {
+      commit('setError', 'Failed to delete project');
+      console.error(error);
+      return false;
+    }
+  },
+
   async deleteProject({ commit, state }: ActionContext<ProjectsState, RootState>, projectId: string) {
     commit('setLoading', true);
     try {
